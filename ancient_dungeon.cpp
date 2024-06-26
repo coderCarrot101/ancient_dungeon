@@ -90,7 +90,6 @@ int * process_input(int * input_update) {
         }
     }
 
-    // Move the paddle based on key states
     if (keys[SDL_SCANCODE_W]) {
         *pInput_update = 'w';
         pInput_update++;
