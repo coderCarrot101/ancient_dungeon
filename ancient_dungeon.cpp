@@ -271,7 +271,7 @@ void render(void) {
     float rayY = midY;
     float rayStep = 1.0;
     bool collide = false;
-    int step = 0;
+    float step = 1;
     float pos = 0;
 
     for (float g = -1; g < 1; g+= 0.005) {
@@ -283,21 +283,17 @@ void render(void) {
         while (rayX >= 0 && rayX < WINDOW_WIDTH && rayY >= 0 && rayY < WINDOW_HEIGHT) {
             rayX += rayStep * cos(ball.radDirection + g);
             rayY += rayStep * sin(ball.radDirection + g);
-
             collide = check_wall_collision(rayX, rayY, 1.0, 1.0);
             if (collide) {
-                pos = (step / 400);
+                pos = (step / 402);
                 pos = 800 * pos;
-                printf("pos: %f\n", pos);// fix this
                 SDL_RenderDrawLine(renderer, pos, 100, pos, 10);
-                break;// turn this into a repo
-                //figure out how to turn the slider from -1 to 1 to a percentage
+                break;
             }
-            step++;// fix this pls
         }
         SDL_RenderDrawLine(renderer, midX, midY, rayX, rayY);
     
-        //step / 400 gives a percentage
+        step += 1;
     }
 
     SDL_RenderPresent(renderer);
