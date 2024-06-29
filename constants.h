@@ -11,6 +11,6 @@
 #define TURN_AMOUNT 1
 
 #define PLAYER_START_X 150
-#define PLAYER_START_Y 150
+#define PLAYER_START_Y 230
 
 #endif

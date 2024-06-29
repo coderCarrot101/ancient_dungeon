@@ -249,7 +249,7 @@ void render(void) {
             if (game_map[i][j] == 1) {
                 SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
                 SDL_Rect tile_rect = { i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE };
-                SDL_RenderFillRect(renderer, &tile_rect);
+                //SDL_RenderFillRect(renderer, &tile_rect);
             }
         }
     }
@@ -262,7 +262,7 @@ void render(void) {
     };
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(renderer, &ball_rect);
+    //SDL_RenderFillRect(renderer, &ball_rect);
 
     float midX = ball.x + ball.width / 2;
     float midY = ball.y + ball.height / 2;
@@ -273,7 +273,8 @@ void render(void) {
     bool collide = false;
     float step = 1;
     float pos = 0;
-    int ray_dist = 255;
+    float ray_dist = 255;
+    float perc_ray_dist = 255;
 
     for (float g = -1; g < 1; g+= 0.005) {
         rayX = midX;
@@ -281,6 +282,7 @@ void render(void) {
         rayStep = 1;
         collide = false;
         ray_dist = 255;
+        perc_ray_dist = 225;
 
         while (rayX >= 0 && rayX < WINDOW_WIDTH && rayY >= 0 && rayY < WINDOW_HEIGHT) {
             rayX += rayStep * cos(ball.radDirection + g);
@@ -289,17 +291,18 @@ void render(void) {
             if (collide) {
                 pos = (step / 402);
                 pos = 800 * pos;
+                perc_ray_dist = (ray_dist / 255);
+                perc_ray_dist *= 255;
                 SDL_SetRenderDrawColor(renderer, ray_dist, ray_dist, ray_dist, ray_dist);
-                SDL_RenderDrawLine(renderer, pos, 100, pos, 10);
-                printf("ray_dist: %d\n", ray_dist);
+                SDL_RenderDrawLine(renderer, pos, 500 + perc_ray_dist, pos, 200 - perc_ray_dist);
                 break;
             }
             if (ray_dist > 0) {
-                ray_dist--;
+                ray_dist -= 1;
             }
         }
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderDrawLine(renderer, midX, midY, rayX, rayY);
+        //SDL_RenderDrawLine(renderer, midX, midY, rayX, rayY);
     
         step += 1;
     }
